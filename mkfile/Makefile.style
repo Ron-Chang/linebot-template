@@ -1,0 +1,26 @@
+# ----- colors ----- #
+
+# normal
+BLACK=\033[30m
+RED=\033[31m
+GREEN=\033[32m
+YELLOW=\033[33m
+BLUE=\033[34m
+PURPLE=\033[35m
+CYAN=\033[36m
+WHITE=\033[37m
+NC=\033[0m
+
+#vivid
+BLACK_B=\033[30;1m
+RED_B=\033[31;1m
+GREEN_B=\033[32;1m
+YELLOW_B=\033[33;1m
+BLUE_B=\033[34;1m
+PURPLE_B=\033[35;1m
+CYAN_B=\033[36;1m
+WHITE_B=\033[37;1m
+
+# Cursor(required printf instead of echo)
+H_CURSOR=\33[?25l
+S_CURSOR=\33[?25h

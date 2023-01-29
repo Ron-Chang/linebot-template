@@ -1,0 +1,51 @@
+# ----- dynamic args ----- #
+
+ARGS=`arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
+
+%:
+	@:
+
+# ----- timer ----- #
+
+TIMER=5
+
+# ----- Common ----- #
+
+default: ## Call help
+	@make help
+
+help: ## Show help message.
+	@printf "\n"
+	@printf "$(WHITE_B)$(SYSTEM_NAME)$(NC) Env: $(YELLOW_B)[$(STAGE)]$(NC)\n\n"
+	@printf "Usage:\n"
+	@printf "  make $(BLUE)<target>$(NC)\n\n"
+	@printf "Targets:\n"
+	@perl -nle'print $& if m{^[a-zA-Z0-9_-]+:.*?## .*$$}' $(MAKEFILE_LIST) | \
+		sort | \
+		awk 'BEGIN {FS = ":.*?## "}; \
+		{printf "$(BLUE)  %-18s$(NC) %s\n", $$1, $$2}'
+
+.cmd-info:  ## [hidden] Command Hint
+	@echo "$(GREEN)[$(STAGE)]$(NC) $(YELLOW_B)[$(ACTION)]$(NC) $(CYAN)$(SYSTEM_NAME).$(APP)$(NC)"
+
+# (OSX doesn't support '.%6N' nanosecond format)
+.info:  ## [hidden] General Message
+	@echo "`date +'%Y-%m-%d %T'` $(BLUE)[I]$(NC) $(CYAN)[$(NC)$(TARGET)$(CYAN)]$(NC) $(INFO)"
+
+.warn:  ## [hidden] Warning Message
+	@echo "`date +'%Y-%m-%d %T'` $(YELLOW)[W]$(NC) $(CYAN)[$(NC)$(TARGET)$(CYAN)]$(NC) $(INFO)"
+
+.err:  ## [hidden] Error Message
+	@echo "`date +'%Y-%m-%d %T'` $(RED)[E]$(NC) $(CYAN)[$(NC)$(TARGET)$(CYAN)]$(NC) $(INFO)"
+
+.crit:  ## [hidden] Critical Message
+	@echo "`date +'%Y-%m-%d %T'` $(RED_B)[C]$(NC) $(CYAN)[$(NC)$(TARGET)$(CYAN)]$(NC) $(INFO)"
+
+demo-msg:  ## Display Message
+	@export TARGET="Makefile" INFO="Display format message" && make .info
+	@export TARGET="Makefile" INFO="Display format message" && make .warn
+	@export TARGET="Makefile" INFO="Display format message" && make .err
+	@export TARGET="Makefile" INFO="Display format message" && make .crit
+
+.countdown:
+	@bash ./mkfile/countdown.sh $(TIMER)
