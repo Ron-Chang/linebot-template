@@ -1,0 +1,58 @@
+version: '3.5'
+name: 'linebot'
+
+# Modify carefully
+x-image-info: &image-info
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: "${APP_IMAGE}"
+
+# Modify carefully
+x-app-info: &app-info
+  networks:
+    - proxy
+  tty: true
+  restart: always
+  init: true
+  logging:
+    options:
+      max-size: 50m
+      max-file: '10'
+
+
+services:
+
+  app:
+    <<: *image-info
+    <<: *app-info
+    container_name: "${APP_NAME}"
+    ports:
+      - "${APP_EXPOSE_PORT:?}:5000"
+    volumes:
+      - "./src:/app"
+    env_file: .env
+    command: 'gunicorn -c wsgi.py main:app'
+    tty: false
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  redis:
+    <<: *app-info
+    image: "${RS_IMAGE}"
+    container_name: "${APP_NAME}-redis"
+    volumes:
+      - "${CONF_PATH}/redis/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "${DB_PATH}/redis:/data"
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+
+
+networks:
+  proxy:
+    name: "${APP_NETWORK}"

@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "linebot-balancer"
+version = "0.1.0"
+description = ""
+authors = ["Ron Chang <ron.hsien.chang@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8.13"
+pydantic = "^1.10.4"
+rejson = "^0.5.6"
+gunicorn = "^20.1.0"
+flask = "2.0.3"
+line-bot-sdk = "^2.4.1"
+flask-cors = "^3.0.10"
+flask-compress = "^1.13"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.0.0"
+neovim = "^0.3.1"
+isort = "^5.11.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
