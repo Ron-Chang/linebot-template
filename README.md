@@ -1,7 +1,21 @@
-# Linebot Template (Line 機器人模板)
-
-## Goal 目的
-- 建立基礎模板，提供二次開發
+<!-- Please be careful editing the below HTML, as GitHub is quite finicky with anything that looks like an HTML tag in GitHub Flavored Markdown. -->
+# Linebot Template
+<p align="center">
+    <!-- Banner Placeholder -->
+</p>
+<p align="center">
+  <b>建立基礎模板，提供二次開發</b>
+</p>
+<p align="center">
+  <a href="https://github.com/Ron-Chang/linebot-template/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/Ron-Chang/linebot-template" alt="License Badge">
+  </a>
+  <!--
+      <a href="https://github.com/Ron-Chang/linebot-template/blob/main/CHANGELOG">
+        <img src="https://img.shields.io/badge/view-changelog-green.svg" alt="Changelog Badge">
+      </a>
+  -->
+</p>
 
 ## Usage 使用方法
 - 於[Line Developers](https://developers.line.biz/)申請開發者帳號
